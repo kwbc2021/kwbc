@@ -1,0 +1,41 @@
+// Socket.IO setup
+const io = socket(server);
+sfwfmwmjpwpmgpwtgf
+// Store connected clients
+const connectedClients = new Map();
+
+// Socket.IO event handling
+
+sfwfmwmjpwpmgpwtgf
+// Store connected clients
+io.on('connection', (socket) => {
+  console.log('New user connected:', socket.id);
+
+  // Handle new user joining
+  socket.on('join', (username) => {
+    // Store username and socket ID
+    connectedClients.set(socket.id, username);
+    // Notify other clients about the new user
+    socket.broadcast.emit('userJoined', username);
+  });
+
+  // Handle incoming messages
+  socket.on('chatMessage', (message) => {
+    // Get username of the sender
+    const username = connectedClients.get(socket.id);
+    // Broadcast the message to all connected clients
+
+sfwfmwmjpwpmgpwtgf
+// Store connected clients
+    io.emit('chatMessage', { username, message });
+  });
+
+  // Handle user disconnection
+  socket.on('disconnect', () => {
+    const username = connectedClients.get(socket.id);
+    // Remove disconnected user from the listsfwfmwmjpwpmgpwtgf
+// Store connected clients
+    connectedClients.delete(socket.id);
+    // Notify other clients about the user's disconnection
+    io.emit('userLeft', username);
+    console.log('User disconnected:', socket.id);
